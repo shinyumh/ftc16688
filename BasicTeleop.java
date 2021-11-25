@@ -73,7 +73,6 @@ public class BasicTeleop extends LinearOpMode {
         robot.rightIntake.setDirection(DcMotor.Direction.FORWARD);
 
         // set servo positions
-        robot.pulley.setPosition(0);
         robot.pushey.setPosition(0);
         robot.closey.setPosition(0);
 
@@ -97,23 +96,18 @@ public class BasicTeleop extends LinearOpMode {
             robot.FrightDrive.setPower(rightPower);
             */
 
-            /* working strafing, wanna check without right_stick_x
+            // movement with joysticks
+
             robot.BleftDrive.setPower((gamepad1.left_stick_y +  gamepad1.left_stick_x - gamepad1.right_stick_x) * (-speedAdjust / 10));
             robot.BrightDrive.setPower((gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x) * (-speedAdjust / 10));
             robot.FleftDrive.setPower((gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x) * (-speedAdjust / 10));
             robot.FrightDrive.setPower((gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x) * (-speedAdjust / 10));
-            */
-
-            robot.BleftDrive.setPower((gamepad1.left_stick_y +  gamepad1.left_stick_x) * (-speedAdjust / 10));
-            robot.BrightDrive.setPower((gamepad1.left_stick_y - gamepad1.left_stick_x) * (-speedAdjust / 10));
-            robot.FleftDrive.setPower((gamepad1.left_stick_y - gamepad1.left_stick_x) * (-speedAdjust / 10));
-            robot.FrightDrive.setPower((gamepad1.left_stick_y + gamepad1.left_stick_x) * (-speedAdjust / 10));
 
 
             // A button - activate the intakes
             if (gamepad1.a) {
                 robot.leftIntake.setPower(2);
-                robot.rightIntake.setPower(-2);
+                robot.rightIntake.setPower(2);
             } else {
                 robot.leftIntake.setPower(0);
                 robot.rightIntake.setPower(0);
@@ -122,7 +116,7 @@ public class BasicTeleop extends LinearOpMode {
             // B button - pseudo outtake
             if (gamepad1.b) {
                 robot.leftIntake.setPower(-2);
-                robot.rightIntake.setPower(2);
+                robot.rightIntake.setPower(-2);
             } else {
                 robot.leftIntake.setPower(0);
                 robot.rightIntake.setPower(0);
@@ -130,23 +124,33 @@ public class BasicTeleop extends LinearOpMode {
 
             // X button - move servo for clasp
             if (gamepad1.x) {
-                robot.pushey.setPosition(-1);
+                robot.pushey.setPosition(1);
             } else {
                 robot.pushey.setPosition(0);
             }
 
-            if (gamepad1.right_bumper) {
-                robot.closey.setPosition(-1);
+            // Y button (2nd Person) - closes for intake
+            if (gamepad2.y) {
+                robot.closey.setPosition(1);
             } else {
-                robot.pushey.setPosition(0);
+                robot.closey.setPosition(0);
             }
 
-            // Y button - move pulley
-            if (gamepad1.y) {
-                robot.pulley.setPosition(-1);
+            // A button (2nd Person) - move pulley up
+            if (gamepad2.a) {
+                robot.pulley.setPower(1);
             } else {
-                robot.pulley.setPosition(0);
+                robot.pulley.setPower(0);
             }
+
+            // B button (2nd Person) - move pulley down
+            if (gamepad2.b) {
+                robot.pulley.setPower(-1);
+            } else {
+                robot.pulley.setPower(0);
+            }
+
+
 
             //(optional) carousel - B button
 

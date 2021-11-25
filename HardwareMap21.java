@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -61,7 +62,7 @@ public class HardwareMap21
 
     // servos
     public Servo pushey = null;
-    public Servo pulley = null;
+    public CRServo pulley = null;
     public Servo closey = null;
 
     // define numerical variables
@@ -89,7 +90,7 @@ public class HardwareMap21
         leftIntake = hwMap.get(DcMotor.class, "leftIntake");
         rightIntake = hwMap.get(DcMotor.class, "rightIntake");
         pushey = hwMap.get(Servo.class, "pushey");
-        pulley = hwMap.get(Servo.class, "pulley");
+        pulley = hwMap.get(CRServo.class, "pulley");
         closey = hwMap.get(Servo.class, "closey");
 
 
@@ -100,6 +101,8 @@ public class HardwareMap21
         BrightDrive.setPower(0);
         leftIntake.setPower(0);
         rightIntake.setPower(0);
+
+        pulley.setPower(0);
 
         // set mode (use encoder!)
         BleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -116,9 +119,9 @@ public class HardwareMap21
         FrightDrive.setDirection(DcMotor.Direction.REVERSE);
         leftIntake.setDirection(DcMotor.Direction.FORWARD);
         rightIntake.setDirection(DcMotor.Direction.REVERSE);
+        pulley.setDirection(CRServo.Direction.FORWARD);
 
         // initialize all servos
-        pulley.setPosition(CLOSED_SERVO);
         pushey.setPosition(CLOSED_SERVO);
         closey.setPosition(CLOSED_SERVO);
     }
