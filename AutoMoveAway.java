@@ -34,20 +34,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
 @Autonomous(name="AutoMoveAway", group="Pushbot")
 public class AutoMoveAway extends LinearOpMode {
 
@@ -93,13 +79,12 @@ public class AutoMoveAway extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        //strafe to left - ignore for now; might need to edit function below
-        //encoderDrive(DRIVE_SPEED,  5,  5, 5,5,3);
-
+        // TODO: TEST THIS THING FIRST
         // move one tile
-        encoderDrive(DRIVE_SPEED,  5,  5, 5,5,3);
+        encoderDrive(DRIVE_SPEED,  25,  25, 25,25,10);
         telemetry.addData("Path", "Straight");
         telemetry.update();
+
         // :DDD
 
         //stop
@@ -172,6 +157,13 @@ public class AutoMoveAway extends LinearOpMode {
             robot.BleftDrive.setPower(0);
             robot.FrightDrive.setPower(0);
             robot.BrightDrive.setPower(0);
+
+            // Reset encoders again
+            robot.FleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.FrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.BleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.BrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
             // Turn off RUN_TO_POSITION
             robot.FleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

@@ -36,33 +36,28 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This is NOT an opmode.
- *
- * This hardware class assumes the following device names have been configured on the robot:
- * Note:  All names are lower case and some have single spaces between words.
- *
- * Motor channel:  Left  drive motor:        "left_drive"
- * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Manipulator drive motor:  "left_arm"
- * Servo channel:  Servo to open left lift:  "left_hand"
- * Servo channel:  Servo to open right lift: "right_hand"
- */
-
 public class HardwareMap21
 {
 
     // motors
-    public DcMotor  FleftDrive  = null;
-    public DcMotor  BleftDrive  = null;
-    public DcMotor  FrightDrive = null;
-    public DcMotor  BrightDrive = null;
+    public DcMotor FleftDrive  = null;
+    public DcMotor BleftDrive  = null;
+    public DcMotor FrightDrive = null;
+    public DcMotor BrightDrive = null;
     public DcMotor leftIntake = null;
     public DcMotor rightIntake = null;
+    public DcMotor carousel = null;
 
     // servos
-    public Servo pushey = null;
+    public CRServo pushey = null;
     public CRServo pulley = null;
+    public CRServo liftey = null;
+    public CRServo outtake1 = null;
+    public CRServo outtake2 = null;
+    public CRServo outtake3 = null;
+    public CRServo outtake4 = null;
+    public CRServo outtake5 = null;
+    public CRServo outtake6 = null;
     public Servo closey = null;
 
     // define numerical variables
@@ -89,28 +84,47 @@ public class HardwareMap21
         BrightDrive = hwMap.get(DcMotor.class, "BrightDrive");
         leftIntake = hwMap.get(DcMotor.class, "leftIntake");
         rightIntake = hwMap.get(DcMotor.class, "rightIntake");
-        pushey = hwMap.get(Servo.class, "pushey");
+        carousel = hwMap.get(DcMotor.class, "carousel");
+        pushey = hwMap.get(CRServo.class, "pushey");
         pulley = hwMap.get(CRServo.class, "pulley");
+        liftey = hwMap.get(CRServo.class, "liftey");
+        outtake1 = hwMap.get(CRServo.class, "outtake1");
+        outtake2 = hwMap.get(CRServo.class, "outtake2");
+        outtake3 = hwMap.get(CRServo.class, "outtake3");
+        outtake4 = hwMap.get(CRServo.class, "outtake4");
+        outtake5 = hwMap.get(CRServo.class, "outtake5");
+        outtake6 = hwMap.get(CRServo.class, "outtake6");
         closey = hwMap.get(Servo.class, "closey");
 
-
-        // set power
+        // set power for motors
         FleftDrive.setPower(0);
         BleftDrive.setPower(0);
         FrightDrive.setPower(0);
         BrightDrive.setPower(0);
         leftIntake.setPower(0);
         rightIntake.setPower(0);
+        carousel.setPower(0);
 
+        //set power for cr servos
         pulley.setPower(0);
+        pushey.setPower(0);
+        liftey.setPower(0);
+        outtake1.setPower(0);
+        outtake2.setPower(0);
+        outtake3.setPower(0);
+        outtake4.setPower(0);
+        outtake5.setPower(0);
+        outtake6.setPower(0);
 
         // set mode (use encoder!)
         BleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightIntake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        carousel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
         // set direction
         BleftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -119,10 +133,21 @@ public class HardwareMap21
         FrightDrive.setDirection(DcMotor.Direction.REVERSE);
         leftIntake.setDirection(DcMotor.Direction.FORWARD);
         rightIntake.setDirection(DcMotor.Direction.REVERSE);
+        carousel.setDirection(DcMotor.Direction.REVERSE);
+        // unsure about carousel direction ^^ test
+
         pulley.setDirection(CRServo.Direction.FORWARD);
+        pushey.setDirection(CRServo.Direction.FORWARD);
+        liftey.setDirection(CRServo.Direction.FORWARD);
+
+        outtake1.setDirection(CRServo.Direction.REVERSE);
+        outtake2.setDirection(CRServo.Direction.REVERSE);
+        outtake3.setDirection(CRServo.Direction.REVERSE);
+        outtake4.setDirection(CRServo.Direction.FORWARD);
+        outtake5.setDirection(CRServo.Direction.FORWARD);
+        outtake6.setDirection(CRServo.Direction.FORWARD);
 
         // initialize all servos
-        pushey.setPosition(CLOSED_SERVO);
         closey.setPosition(CLOSED_SERVO);
     }
 }

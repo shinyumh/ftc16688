@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+
 @TeleOp(name="BasicTeleop", group="TeleOp")
 
 public class BasicTeleop extends LinearOpMode {
@@ -45,8 +46,8 @@ public class BasicTeleop extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     double speedAdjust = 5;
     // Setup a variable for each drive wheel to save power level for telemetry
-    double leftPower;
-    double rightPower;
+    double leftPower = 0;
+    double rightPower = 0;
 
     @Override
     public void runOpMode() {
@@ -73,8 +74,17 @@ public class BasicTeleop extends LinearOpMode {
         robot.rightIntake.setDirection(DcMotor.Direction.FORWARD);
 
         // set servo positions
-        robot.pushey.setPosition(0);
         robot.closey.setPosition(0);
+        robot.pushey.setPower(0);
+        robot.pulley.setPower(0);
+        robot.liftey.setPower(0);
+        robot.outtake1.setPower(0);
+        robot.outtake2.setPower(0);
+        robot.outtake3.setPower(0);
+        robot.outtake4.setPower(0);
+        robot.outtake5.setPower(0);
+        robot.outtake6.setPower(0);
+
 
         // wait for driver to press start
         waitForStart();
@@ -98,13 +108,12 @@ public class BasicTeleop extends LinearOpMode {
 
             // movement with joysticks
 
-            robot.BleftDrive.setPower((gamepad1.left_stick_y +  gamepad1.left_stick_x - gamepad1.right_stick_x) * (-speedAdjust / 10));
+            robot.BleftDrive.setPower((gamepad1.left_stick_y + gamepad1.left_stick_x - gamepad1.right_stick_x) * (-speedAdjust / 10));
             robot.BrightDrive.setPower((gamepad1.left_stick_y - gamepad1.left_stick_x + gamepad1.right_stick_x) * (-speedAdjust / 10));
             robot.FleftDrive.setPower((gamepad1.left_stick_y - gamepad1.left_stick_x - gamepad1.right_stick_x) * (-speedAdjust / 10));
             robot.FrightDrive.setPower((gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x) * (-speedAdjust / 10));
 
-
-            // A button - activate the intakes
+            // A button - activate intakes
             if (gamepad1.a) {
                 robot.leftIntake.setPower(2);
                 robot.rightIntake.setPower(2);
@@ -122,41 +131,76 @@ public class BasicTeleop extends LinearOpMode {
                 robot.rightIntake.setPower(0);
             }
 
-            // X button - move servo for clasp
+            // X and Y button - move servo for pushey in/out
             if (gamepad1.x) {
-                robot.pushey.setPosition(1);
+                robot.pushey.setPower(2);
+            } else if (gamepad1.y) {
+                robot.pushey.setPower(-2);
             } else {
-                robot.pushey.setPosition(0);
+                robot.pushey.setPower(0);
             }
 
-            // Y button (2nd Person) - closes for intake
+            // Right trigger - spin carousel
+            if (gamepad1.right_trigger > 0.8) {
+                robot.carousel.setPower(2);
+            } else {
+                robot.carousel.setPower(0);
+            }
+
+
+
+            // 2nd Gamepad
+
+            // A and B button (2nd Person) - move pulley + liftey up & down
+            if (gamepad2.a) {
+                robot.pulley.setPower(2);
+            } else if (gamepad2.b) {
+                robot.pulley.setPower(-2);
+            } else {
+                robot.pulley.setPower(0);
+            }
+
+            // Y button (2nd Person) - closes for intake, default is closed
             if (gamepad2.y) {
-                robot.closey.setPosition(1);
+                robot.closey.setPosition(0.35);
             } else {
                 robot.closey.setPosition(0);
             }
 
-            // A button (2nd Person) - move pulley up
-            if (gamepad2.a) {
-                robot.pulley.setPower(1);
+
+            // X Button (2nd Person) - outtake
+            if (gamepad2.x) {
+                robot.outtake1.setPower(-1);
+                robot.outtake2.setPower(-1);
+                robot.outtake3.setPower(-1);
+                robot.outtake4.setPower(-1);
+                robot.outtake5.setPower(-1);
+                robot.outtake6.setPower(-1);
             } else {
-                robot.pulley.setPower(0);
+                robot.outtake1.setPower(0);
+                robot.outtake2.setPower(0);
+                robot.outtake3.setPower(0);
+                robot.outtake4.setPower(0);
+                robot.outtake5.setPower(0);
+                robot.outtake6.setPower(0);
             }
 
-            // B button (2nd Person) - move pulley down
-            if (gamepad2.b) {
-                robot.pulley.setPower(-1);
+            // Left Trigger (2nd Person) - troubleshooting with liftey
+            if (gamepad2.left_trigger > 0.8) {
+                robot.liftey.setPower(-1);
+            } else if (gamepad2.right_trigger > 0.8) {
+                robot.liftey.setPower(1);
             } else {
-                robot.pulley.setPower(0);
+                robot.liftey.setPower(0);
             }
 
 
 
-            //(optional) carousel - B button
 
             // show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            telemetry.addData("Pulley Position", "position (%s)", robot.pulley.getPower() );
             telemetry.update();
         }
     }

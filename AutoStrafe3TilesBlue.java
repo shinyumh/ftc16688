@@ -35,19 +35,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
 @Autonomous(name="AutoStrafe3TilesBlue", group="Pushbot")
 public class AutoStrafe3TilesBlue extends LinearOpMode {
 
@@ -82,6 +69,7 @@ public class AutoStrafe3TilesBlue extends LinearOpMode {
         robot.BrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.FrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+
         // send telemetry message to show current wheels position
         telemetry.addData("Path0",  "Starting at %7d :%7d",
                 robot.FrightDrive.getCurrentPosition(),
@@ -93,8 +81,19 @@ public class AutoStrafe3TilesBlue extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // strafe left three tiles
-        encoderDrive(DRIVE_SPEED,  -5,  5, 5,-5,9);
+        // strafe right one tile
+        encoderDrive(DRIVE_SPEED,  25,  -25, -25,25,3);
+        telemetry.addData("Path", "Strafe");
+        telemetry.update();
+
+        // TODO: NATHANIEL PLS FIX IF IT DOESN'T WORK
+        // run carousel for 10 seconds
+        robot.carousel.setPower(5);
+        sleep(10000);
+        robot.carousel.setPower(0);
+
+        // strafe left four tiles
+        encoderDrive(DRIVE_SPEED,  -25,  25, 25,-25,12);
         telemetry.addData("Path", "Strafe");
         telemetry.update();
 
