@@ -68,6 +68,11 @@ public class AutoMoveAway extends LinearOpMode {
         robot.BrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.FrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        robot.BleftDrive.setDirection(DcMotor.Direction.REVERSE);
+        robot.FleftDrive.setDirection(DcMotor.Direction.REVERSE);
+        robot.BrightDrive.setDirection(DcMotor.Direction.FORWARD);
+        robot.FrightDrive.setDirection(DcMotor.Direction.FORWARD);
+
         // send telemetry message to show current wheels position
         telemetry.addData("Path0",  "Starting at %7d :%7d",
                 robot.FrightDrive.getCurrentPosition(),
@@ -81,7 +86,7 @@ public class AutoMoveAway extends LinearOpMode {
 
         // TODO: TEST THIS THING FIRST
         // move one tile
-        encoderDrive(DRIVE_SPEED,  25,  25, 25,25,10);
+        encoderDrive(DRIVE_SPEED,  12,  12, 12,12,10);
         telemetry.addData("Path", "Straight");
         telemetry.update();
 

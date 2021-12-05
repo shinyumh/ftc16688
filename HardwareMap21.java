@@ -52,12 +52,6 @@ public class HardwareMap21
     public CRServo pushey = null;
     public CRServo pulley = null;
     public CRServo liftey = null;
-    public CRServo outtake1 = null;
-    public CRServo outtake2 = null;
-    public CRServo outtake3 = null;
-    public CRServo outtake4 = null;
-    public CRServo outtake5 = null;
-    public CRServo outtake6 = null;
     public Servo closey = null;
 
     // define numerical variables
@@ -88,12 +82,6 @@ public class HardwareMap21
         pushey = hwMap.get(CRServo.class, "pushey");
         pulley = hwMap.get(CRServo.class, "pulley");
         liftey = hwMap.get(CRServo.class, "liftey");
-        outtake1 = hwMap.get(CRServo.class, "outtake1");
-        outtake2 = hwMap.get(CRServo.class, "outtake2");
-        outtake3 = hwMap.get(CRServo.class, "outtake3");
-        outtake4 = hwMap.get(CRServo.class, "outtake4");
-        outtake5 = hwMap.get(CRServo.class, "outtake5");
-        outtake6 = hwMap.get(CRServo.class, "outtake6");
         closey = hwMap.get(Servo.class, "closey");
 
         // set power for motors
@@ -109,12 +97,6 @@ public class HardwareMap21
         pulley.setPower(0);
         pushey.setPower(0);
         liftey.setPower(0);
-        outtake1.setPower(0);
-        outtake2.setPower(0);
-        outtake3.setPower(0);
-        outtake4.setPower(0);
-        outtake5.setPower(0);
-        outtake6.setPower(0);
 
         // set mode (use encoder!)
         BleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -139,13 +121,6 @@ public class HardwareMap21
         pulley.setDirection(CRServo.Direction.FORWARD);
         pushey.setDirection(CRServo.Direction.FORWARD);
         liftey.setDirection(CRServo.Direction.FORWARD);
-
-        outtake1.setDirection(CRServo.Direction.REVERSE);
-        outtake2.setDirection(CRServo.Direction.REVERSE);
-        outtake3.setDirection(CRServo.Direction.REVERSE);
-        outtake4.setDirection(CRServo.Direction.FORWARD);
-        outtake5.setDirection(CRServo.Direction.FORWARD);
-        outtake6.setDirection(CRServo.Direction.FORWARD);
 
         // initialize all servos
         closey.setPosition(CLOSED_SERVO);

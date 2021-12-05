@@ -80,21 +80,36 @@ public class AutoStrafe3TilesRed extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // move one tile backward
-        encoderDrive(DRIVE_SPEED,  -25,  -25, -25,-25,3);
+        // turn left
+        encoderDrive(DRIVE_SPEED,  10,  -10, 10,-10,3);
         telemetry.addData("Path", "Straight");
         telemetry.update();
 
-        // TODO: NATHANIEL PLS FIX IF IT DOESN'T WORK
+        // strafe right
+        encoderDrive(DRIVE_SPEED,  -4,  4, 4,-4,3);
+        telemetry.addData("Path", "Straight");
+        telemetry.update();
+
         // run carousel for 10 seconds
-        robot.carousel.setPower(5);
-        sleep(10000);
+        robot.carousel.setPower(3);
+        sleep(5000);
         robot.carousel.setPower(0);
 
-        // move four tile forward
-        encoderDrive(DRIVE_SPEED,  100,  100, 100,100,12);
+        // ????
+        encoderDrive(DRIVE_SPEED,  0,  3, 0,3,3);
         telemetry.addData("Path", "Straight");
         telemetry.update();
+
+        // move one tile backward
+        encoderDrive(DRIVE_SPEED,  12,  12, 12,12,12);
+        telemetry.addData("Path", "Straight");
+        telemetry.update();
+
+        // unsure (test it out) - should turn and adjust parking
+        encoderDrive(DRIVE_SPEED,  0,  3, 0,3,12);
+        telemetry.addData("Path", "Straight");
+        telemetry.update();
+
 
         // stop
         robot.FrightDrive.setPower(0);

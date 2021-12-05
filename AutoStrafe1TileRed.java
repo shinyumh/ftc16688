@@ -32,10 +32,11 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="AutoStrafe1TileRed", group="Pushbot")
-public class    AutoStrafe1TileRed extends LinearOpMode {
+public class AutoStrafe1TileRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareMap21         robot   = new HardwareMap21();
@@ -68,6 +69,14 @@ public class    AutoStrafe1TileRed extends LinearOpMode {
         robot.BrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.FrightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        robot.BleftDrive.setDirection(DcMotor.Direction.REVERSE);
+        robot.FleftDrive.setDirection(DcMotor.Direction.REVERSE);
+        robot.BrightDrive.setDirection(DcMotor.Direction.FORWARD);
+        robot.FrightDrive.setDirection(DcMotor.Direction.FORWARD);
+        robot.leftIntake.setDirection(DcMotor.Direction.FORWARD);
+        robot.rightIntake.setDirection(DcMotor.Direction.FORWARD);
+
+
         // send telemetry message to show current wheels position
         telemetry.addData("Path0",  "Starting at %7d :%7d",
                 robot.FrightDrive.getCurrentPosition(),
@@ -79,15 +88,28 @@ public class    AutoStrafe1TileRed extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        robot.pushey.setPower(-2);
+        sleep(1000);
+        robot.pushey.setPower(0);
+
+        // stop intake wheels
+        robot.leftIntake.setPower(1);
+        robot.rightIntake.setPower(1);
+
         // strafe right one tile
-        encoderDrive(DRIVE_SPEED,  5,  -5, -5,5,3);
+        encoderDrive(DRIVE_SPEED,  25,  -25, -25,25,3);
         telemetry.addData("Path", "Strafe");
         telemetry.update();
 
+        // stop intake wheels
+        robot.leftIntake.setPower(0);
+        robot.rightIntake.setPower(0);
+
         // move one tile
-        encoderDrive(DRIVE_SPEED,  5,  5, 5,5,3);
+        encoderDrive(DRIVE_SPEED,  12,  12, 12,12,3);
         telemetry.addData("Path", "Straight");
         telemetry.update();
+
 
         //stop
         robot.FrightDrive.setPower(0);
@@ -159,6 +181,7 @@ public class    AutoStrafe1TileRed extends LinearOpMode {
             robot.BleftDrive.setPower(0);
             robot.FrightDrive.setPower(0);
             robot.BrightDrive.setPower(0);
+
 
             // Turn off RUN_TO_POSITION
             robot.FleftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
